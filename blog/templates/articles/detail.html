@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Name article - {{ articles.name }}</h1>
+    <h1>Text article - {{ articles.text }}</h1>
+    <h1>Id author - <a href="{{ url_for('user_app.detail_user', pk=articles.author) }}">{{ articles.author }}</a></h1>
+{% endblock %}
