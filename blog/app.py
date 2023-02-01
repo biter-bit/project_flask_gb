@@ -3,6 +3,8 @@ from blog.users.views import user_app
 from blog.articles.views import article_app
 from blog.auth.views import auth_app, login_manager
 from blog.models.database import db
+import os
+from flask_migrate import Migrate
 
 
 def register_blueprints(app: Flask):
@@ -13,10 +15,10 @@ def register_blueprints(app: Flask):
 
 def create_app() -> Flask:
     app = Flask(__name__)
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.config["SECRET_KEY"] = "abcdefg1234556"
+    cfg_name = os.environ.get("CONFIG_NAME") or "DevConfig"
+    app.config.from_object(f'blog.config.{cfg_name}')
     db.init_app(app)
+    migrate = Migrate(app, db, compare_type=True)
     login_manager.init_app(app)
     register_blueprints(app)
     return app

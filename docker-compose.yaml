@@ -1,0 +1,25 @@
+version: "3.5"
+
+services:
+  app:
+    build: .
+    volumes:
+      - ./blog:/app/blog
+      - ./wsgi.py:/app/wsgi.py
+    ports:
+      - 5000:5000
+    depends_on:
+      - pg
+
+  pg:
+    image: postgres
+    environment:
+      POSTGRES_DB: blog
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      -  ${HOME}/dbs/flask-lesson/pgdata_dev:/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
+      

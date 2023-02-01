@@ -1,5 +1,7 @@
 from blog.app import create_app
 from blog.models.database import db
+import hashlib
+from werkzeug.security import generate_password_hash
 
 app = create_app()
 
@@ -19,14 +21,15 @@ def init_db():
 @app.cli.command("create-users")
 def create_users():
     from blog.models.user import User
-    admin = User(username='admin', is_staff=True)
-    james = User(username="james")
+    admin = User(username='admin', is_staff=True, password=generate_password_hash('password123'))
+    james = User(username="james", is_staff=True, password=generate_password_hash('password123'))
 
     db.session.add(admin)
     db.session.add(james)
     db.session.commit()
 
     print("done! created users:", admin, james)
+
 
 # @app.cli.command("create-articles")
 # def create_articles():
