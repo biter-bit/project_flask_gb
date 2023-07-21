@@ -5,9 +5,7 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 COPY wsgi.py wsgi.py
 COPY blog ./blog
-
-ENV SQLALCHEMY_DATABASE_URI=postgresql://user:password@pg:5432/blog
-ENV CONFIG_NAME=DevConfig
+#COPY .env ./blog/.
 
 RUN pip3 install -r requirements.txt
 

@@ -1,6 +1,5 @@
 from blog.app import create_app
-from blog.models.database import db
-import hashlib
+from blog.extensions import db
 from werkzeug.security import generate_password_hash
 
 app = create_app()
@@ -12,26 +11,20 @@ if __name__ == '__main__':
     )
 
 
-@app.cli.command("init-db")
-def init_db():
-    db.create_all()
-    print("done!")
-
-
 @app.cli.command("create-users")
 def create_users():
-    from blog.models.user import User
-    admin = User(username='admin', is_staff=True, password=generate_password_hash('password123'))
-    james = User(username="james", is_staff=True, password=generate_password_hash('password123'))
+    from blog.models import User
+    admin = User(username='admin_2', is_staff=True, password='qqq', email='mixeil@mail.ru')
 
     db.session.add(admin)
-    db.session.add(james)
     db.session.commit()
 
-    print("done! created users:", admin, james)
+    print("done! created users:", admin)
 
 
 # @app.cli.command("create-articles")
 # def create_articles():
-#     from blog.models.user import Articles
-#     news = Articles(title='news_1', description='description_1')
+#     from blog.models import Articles
+#     news = Articles(title='news_1', description='description_1', author=1)
+#     db.session.add(news)
+#     db.session.commit()

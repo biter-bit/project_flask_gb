@@ -6,13 +6,17 @@ services:
     volumes:
       - ./blog:/app/blog
       - ./wsgi.py:/app/wsgi.py
+    environment:
+      SQLALCHEMY_DATABASE_URI: postgresql://user:password@pg:5432/blog
+      CONFIG_NAME: DevConfig
+      DATABASE_URL: postgresql://user:password@pg:5432/blog
     ports:
       - 5000:5000
     depends_on:
       - pg
 
   pg:
-    image: postgres
+    image: postgres:latest
     environment:
       POSTGRES_DB: blog
       POSTGRES_USER: user
@@ -21,5 +25,5 @@ services:
     volumes:
       -  ${HOME}/dbs/flask-lesson/pgdata_dev:/var/lib/postgresql/data/pgdata
     ports:
-      - 5432:5432
+      - 5433:5432
       
