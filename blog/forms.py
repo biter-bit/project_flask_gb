@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, validators, PasswordField, SubmitField
+from wtforms import Form, StringField, validators, PasswordField, SubmitField, TextAreaField
 from flask_wtf import FlaskForm
 
 
@@ -26,3 +26,9 @@ class LoginForm(FlaskForm):
     username = StringField("Username", [validators.DataRequired()], )
     password = PasswordField("Password", [validators.DataRequired()], )
     submit = SubmitField("Login")
+
+
+class CreateArticleForm(FlaskForm):
+    title = StringField("Title", [validators.DataRequired()])
+    description = TextAreaField("Description", [validators.DataRequired()])
+    submit = SubmitField('Publish')

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
     {% for i in articles %}
-            <h1>Name article - <a href="{{ url_for('article_app.detail_article', pk=i) }}">{{ articles[i]['name'] }}</a></h1>
+            <h1>Name article - <a href="{{ url_for('article_app.detail_article', pk=i.id) }}">{{ i.title }}</a></h1>
     {% endfor %}
 {% endblock %}

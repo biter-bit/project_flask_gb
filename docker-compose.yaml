@@ -6,6 +6,7 @@ services:
     volumes:
       - ./blog:/app/blog
       - ./wsgi.py:/app/wsgi.py
+      - ./migrations:/app/migrations
     environment:
       SQLALCHEMY_DATABASE_URI: postgresql://user:password@pg:5432/blog
       CONFIG_NAME: DevConfig

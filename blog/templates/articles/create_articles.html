@@ -4,7 +4,7 @@
 {% block content %}
     <form method="POST">
         {{ form.csrf_token }}
-        {% for field in ['first_name', 'last_name', 'username', 'email', 'password', 'confirm' ] %}
+        {% for field in ['title', 'description'] %}
             {{ render_field(form[field]) }}
         {% endfor %}
         {{ form.submit(class='btn btn-primary') }}

@@ -5,6 +5,7 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 COPY wsgi.py wsgi.py
 COPY blog ./blog
+COPY migrations ./.
 #COPY .env ./blog/.
 
 RUN pip3 install -r requirements.txt

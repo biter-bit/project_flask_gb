@@ -2,6 +2,7 @@ from flask import Flask
 from blog.users.views import user_app
 from blog.articles.views import article_app
 from blog.auth.views import auth_app
+from blog.authors.views import author_app
 from blog.extensions import login_manager, db, migrate, flask_bcrypt
 import os
 from flask_migrate import Migrate
@@ -18,6 +19,7 @@ def register_blueprints(app: Flask):
     app.register_blueprint(user_app)
     app.register_blueprint(article_app)
     app.register_blueprint(auth_app)
+    app.register_blueprint(author_app)
     return 'Ok'
 
 
