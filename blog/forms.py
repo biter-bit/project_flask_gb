@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, validators, PasswordField, SubmitField, TextAreaField
+from wtforms import Form, StringField, validators, PasswordField, SubmitField, TextAreaField, SelectMultipleField
 from flask_wtf import FlaskForm
 
 
@@ -32,3 +32,4 @@ class CreateArticleForm(FlaskForm):
     title = StringField("Title", [validators.DataRequired()])
     description = TextAreaField("Description", [validators.DataRequired()])
     submit = SubmitField('Publish')
+    tags = SelectMultipleField("Tags", coerce=int)

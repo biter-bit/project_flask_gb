@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, request, current_app, redirect, url_for
 from flask_login import login_required, current_user
 from werkzeug.exceptions import NotFound
-from blog.models import Articles, Author
+from blog.models import Articles, Author, Tag
 from blog.forms import CreateArticleForm
 from blog.extensions import db
+from sqlalchemy.orm import joinedload
 
 article_app = Blueprint('article_app', __name__, static_folder='../static', url_prefix='/articles')
 
@@ -32,12 +33,17 @@ def articles_list():
 def articles_create():
     error = None
     form = CreateArticleForm(request.form)
+    form.tags.choices = [(tag.id, tag.name) for tag in Tag.query.order_by("name")]
     if request.method == 'POST' and form.validate_on_submit():
         article = Articles(
             title=form.title.data,
             description=form.description.data
         )
         db.session.add(article)
+        if form.tags.data:
+            selected_tags = Tag.query.filter(Tag.id.in_(form.tags.data))
+            for i in selected_tags:
+                article.tags.append(i)
         if current_user.author:
             article.author = current_user.author
         else:
@@ -57,7 +63,7 @@ def articles_create():
 
 @article_app.route('/<int:pk>/', endpoint='detail_article')
 def get_article(pk: int):
-    articles = Articles.query.filter_by(id=pk).one_or_none()
+    articles = Articles.query.filter_by(id=pk).options(joinedload(Articles.tags)).one_or_none()
     if articles is None:
         NotFound('This article is not in the database')
     return render_template('articles/detail.html', articles=articles)

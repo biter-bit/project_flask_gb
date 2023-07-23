@@ -1,8 +1,16 @@
-from sqlalchemy import Column, Integer, String, Boolean, LargeBinary, ForeignKey, Text, DateTime, func
+from sqlalchemy import Column, Integer, String, Boolean, LargeBinary, ForeignKey, Text, DateTime, func, Table
 from sqlalchemy.orm import relationship
 from blog.extensions import db, flask_bcrypt
 from flask_login import UserMixin
 from datetime import datetime
+
+
+article_tag = Table(
+    'article_tag',
+    db.metadata,
+    Column("article_id", Integer, ForeignKey("articles.id"), nullable=False),
+    Column("tag_id", Integer, ForeignKey("tags.id"), nullable=False),
+)
 
 
 class User(db.Model, UserMixin):
@@ -51,6 +59,15 @@ class Articles(db.Model):
     dt_updated = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     author_id = Column(Integer, ForeignKey('authors.id'))
     author = relationship("Author", back_populates='article')
+    tags = relationship("Tag", secondary=article_tag, back_populates="articles")
 
     def __repr__(self):
         return f'Article - {self.name_article}'
+
+
+class Tag(db.Model):
+    __tablename__ = 'tags'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), unique=True, nullable=False)
+    articles = relationship("Articles", secondary=article_tag, back_populates="tags")

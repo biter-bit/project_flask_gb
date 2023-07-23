@@ -3,4 +3,14 @@
     <h1>Name article - {{ articles.title }}</h1>
     <h1>Text article - {{ articles.description }}</h1>
     <h1>Id author - <a href="{{ url_for('user_app.detail_user', pk=articles.id) }}">{{ articles.author }}</a></h1>
+    {% if articles.tags %}
+        <div>Tags:</div>
+        <ui>
+            {% for tag in articles.tags %}
+                <li>
+                    <span class="tag tag-default">{{ tag.name }}</span>
+                </li>
+            {% endfor %}
+        </ui>
+    {% endif %}
 {% endblock %}
