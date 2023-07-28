@@ -3,7 +3,9 @@ from blog.users.views import user_app
 from blog.articles.views import article_app
 from blog.auth.views import auth_app
 from blog.authors.views import author_app
-from blog.extensions import login_manager, db, migrate, flask_bcrypt
+from blog.extensions import login_manager, db, migrate, flask_bcrypt, admin
+from blog.admin import CustomView, UserAdminView
+from blog.models import Tag, Articles, User
 import os
 from flask_migrate import Migrate
 
@@ -41,4 +43,8 @@ def create_app() -> Flask:
     login_manager.init_app(app)
     flask_bcrypt.init_app(app)
     register_blueprints(app)
+    admin.init_app(app)
+    admin.add_view(CustomView(Tag, db.session, category='Models'))
+    admin.add_view(CustomView(Articles, db.session, category='Models'))
+    admin.add_view(UserAdminView(User, db.session, category='Models'))
     return app
