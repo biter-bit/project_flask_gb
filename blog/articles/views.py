@@ -67,3 +67,18 @@ def get_article(pk: int):
     if articles is None:
         NotFound('This article is not in the database')
     return render_template('articles/detail.html', articles=articles)
+
+
+@article_app.route('/filter_tag/<string:tag>/', endpoint='article_filter_tag')
+def get_articles_tag(tag: str):
+    tag_obj = Tag.query.filter_by(name=tag).one_or_none()
+    if tag is None:
+        NotFound('This tag is not in the database')
+    first_articles = Articles.query.all()
+    articles = []
+    for i in first_articles:
+        if tag_obj not in i.tags:
+            NotFound('This article is not with this tag')
+        else:
+            articles.append(i)
+    return render_template('articles/list.html', articles=articles)
