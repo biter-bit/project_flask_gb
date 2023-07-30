@@ -11,6 +11,10 @@ services:
       SQLALCHEMY_DATABASE_URI: postgresql://user:password@pg:5432/blog
       CONFIG_NAME: DevConfig
       DATABASE_URL: postgresql://user:password@pg:5432/blog
+      FLASK_ADMIN_SWATCH: 'cosmo'
+      OPENAPI_URL_PREFIX: '/api/swagger'
+      OPENAPI_SWAGGER_UI_PATH: '/'
+      OPENAPI_SWAGGER_UI_VERSION: '3.22.0'
     ports:
       - 5000:5000
     depends_on:

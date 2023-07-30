@@ -8,6 +8,7 @@ from blog.admin import CustomView, UserAdminView
 from blog.models import Tag, Articles, User
 import os
 from flask_migrate import Migrate
+from blog.api import init_api
 
 
 def register_blueprints(app: Flask):
@@ -44,6 +45,7 @@ def create_app() -> Flask:
     flask_bcrypt.init_app(app)
     register_blueprints(app)
     admin.init_app(app)
+    init_api(app)
     admin.add_view(CustomView(Tag, db.session, category='Models'))
     admin.add_view(CustomView(Articles, db.session, category='Models'))
     admin.add_view(UserAdminView(User, db.session, category='Models'))
