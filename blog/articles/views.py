@@ -5,6 +5,7 @@ from blog.models import Articles, Author, Tag
 from blog.forms import CreateArticleForm
 from blog.extensions import db
 from sqlalchemy.orm import joinedload
+import requests
 
 article_app = Blueprint('article_app', __name__, static_folder='../static', url_prefix='/articles')
 
@@ -25,7 +26,8 @@ article_app = Blueprint('article_app', __name__, static_folder='../static', url_
 @article_app.route('/', endpoint='article')
 def articles_list():
     articles = Articles.query.all()
-    return render_template('articles/list.html', articles=articles)
+    count = requests.get('http://0.0.0.0:5000/api/article/event_get_data/')
+    return render_template('articles/list.html', articles=articles, count=count.json())
 
 
 @article_app.route('/create/', methods=['GET', 'POST'], endpoint='article_create')
