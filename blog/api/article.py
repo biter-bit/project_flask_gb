@@ -28,4 +28,5 @@ class ArticleDetail(ResourceDetail):
         "session": db.session,
         "model": Articles,
         'permission_get': [ArticlePermission],
+        'permission_patch': [ArticlePermission],
     }
