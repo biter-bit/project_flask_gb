@@ -31,6 +31,7 @@ def articles_list():
         count = requests.get(f'{url_domen}api/article/event_get_data/')
     else:
         count = requests.get('http://0.0.0.0:5000/api/article/event_get_data/')
+    print(count)
     return render_template('articles/list.html', articles=articles, count=count.json())
 
 
