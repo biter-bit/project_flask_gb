@@ -28,7 +28,7 @@ def articles_list():
     articles = Articles.query.all()
     url_domen = os.environ.get("URL_DOMEN")
     if url_domen:
-        count = requests.get(f'{url_domen}api/article/event_get_data/')
+        count = requests.get(f'{url_domen}/api/article/event_get_data/')
     else:
         count = requests.get('http://0.0.0.0:5000/api/article/event_get_data/')
     return render_template('articles/list.html', articles=articles, count=count.json())
