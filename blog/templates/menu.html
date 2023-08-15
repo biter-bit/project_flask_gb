@@ -1,0 +1,12 @@
+<button type="button" class="btn btn-secondary"><a href="{{ url_for('user_app.users') }}" class="text-decoration-none link-dark">Back users</a></button>
+<button type="button" class="btn btn-secondary"><a href="{{ url_for('article_app.article') }}" class="text-decoration-none link-dark">Back articles</a></button>
+<button type="button" class="btn btn-secondary"><a href="{{ url_for('article_app.article_create') }}" class="text-decoration-none link-dark">Create articles</a></button>
+<button type="button" class="btn btn-secondary"><a href="{{ url_for('author_app.authors') }}" class="text-decoration-none link-dark">Back authors</a></button>
+{% if current_user.is_authenticated %}
+    <button type="button" class="btn btn-secondary"><a href="{{ url_for('auth_app.logout') }}" class="text-decoration-none link-dark">Logout</a></button>
+    <button type="button" class="btn btn-secondary"><a href="{{ url_for('auth_app.secret') }}" class="text-decoration-none link-dark">Secret</a></button>
+{% else %}
+    <button type="button" class="btn btn-secondary"><a href="{{ url_for('auth_app.login') }}" class="text-decoration-none link-dark">Login</a></button>
+    <button type="button" class="btn btn-secondary"><a href="{{ url_for('auth_app.register') }}" class="text-decoration-none link-dark">Register</a></button>
+{% endif %}
+<br><br>
