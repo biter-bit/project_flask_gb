@@ -27,11 +27,11 @@ article_app = Blueprint('article_app', __name__, static_folder='../static', url_
 def articles_list():
     articles = Articles.query.all()
     url_domen = os.getenv("URL_DOMEN")
+    print('url_domen:', url_domen)
     if url_domen:
         count = requests.get(f'{url_domen}api/article/event_get_data/')
     else:
         count = requests.get('http://0.0.0.0:5000/api/article/event_get_data/')
-    print(count)
     return render_template('articles/list.html', articles=articles, count=count.json())
 
 
