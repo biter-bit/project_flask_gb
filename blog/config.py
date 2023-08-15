@@ -11,6 +11,7 @@ class BaseConfig:
     OPENAPI_URL_PREFIX = '/api/swagger'
     OPENAPI_SWAGGER_UI_PATH = '/'
     OPENAPI_SWAGGER_UI_VERSION = '3.22.0'
+    URL_DOMEN = 'http://127.0.0.1:5000'
 
 
 class DevConfig(BaseConfig):
@@ -22,3 +23,4 @@ class DevConfig(BaseConfig):
     OPENAPI_URL_PREFIX = os.environ.get('OPENAPI_URL_PREFIX')
     OPENAPI_SWAGGER_UI_PATH = os.environ.get('OPENAPI_SWAGGER_UI_PATH')
     OPENAPI_SWAGGER_UI_VERSION = os.environ.get('OPENAPI_SWAGGER_UI_VERSION')
+    URL_DOMEN = os.environ.get('URL_DOMEN')
