@@ -26,7 +26,11 @@ article_app = Blueprint('article_app', __name__, static_folder='../static', url_
 @article_app.route('/', endpoint='article')
 def articles_list():
     articles = Articles.query.all()
-    count = requests.get('http://0.0.0.0:10000/api/article/event_get_data/')
+    url_domen = os.getenv("URL_DOMEN")
+    if url_domen:
+        count = requests.get(f'{url_domen}api/article/event_get_data/')
+    else:
+        count = requests.get('http://0.0.0.0:5000/api/article/event_get_data/')
     return render_template('articles/list.html', articles=articles, count=count.json())
 
 
@@ -73,7 +77,11 @@ def get_article(pk: int):
 
 @article_app.route('/filter_tag/<string:tag>/', endpoint='article_filter_tag')
 def get_articles_tag(tag: str):
-    count = requests.get('http://0.0.0.0:10000/api/article/event_get_data/')
+    url_domen = os.getenv("URL_DOMEN")
+    if url_domen:
+        count = requests.get(f'{url_domen}api/article/event_get_data/')
+    else:
+        count = requests.get('http://0.0.0.0:5000/api/article/event_get_data/')
     tag_obj = Tag.query.filter_by(name=tag).one_or_none()
     if tag is None:
         NotFound('This tag is not in the database')
