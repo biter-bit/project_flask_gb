@@ -73,6 +73,7 @@ def get_article(pk: int):
 
 @article_app.route('/filter_tag/<string:tag>/', endpoint='article_filter_tag')
 def get_articles_tag(tag: str):
+    count = requests.get('http://0.0.0.0:5000/api/article/event_get_data/')
     tag_obj = Tag.query.filter_by(name=tag).one_or_none()
     if tag is None:
         NotFound('This tag is not in the database')
@@ -83,4 +84,4 @@ def get_articles_tag(tag: str):
             NotFound('This article is not with this tag')
         else:
             articles.append(i)
-    return render_template('articles/list.html', articles=articles)
+    return render_template('articles/list.html', articles=articles, count=count.json())
